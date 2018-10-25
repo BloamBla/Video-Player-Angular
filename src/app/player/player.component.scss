@@ -1,0 +1,54 @@
+.play-list-item {
+  width: 250px;
+}
+
+.img-wrap {
+  height: 100px;
+  background: no-repeat 50% 0;
+  -webkit-background-size: contain;
+  background-size: contain;
+}
+
+.video-item {
+  max-height: 75%;
+}
+
+.video-wrap {
+  width: 100%;
+  height: fit-content;
+}
+
+.player-wrap {
+  height: 60vh;
+}
+
+.play-list-wrap {
+  height: 35vh;
+  overflow-y: scroll;
+}
+
+.bottom-0 {
+  bottom: 0;
+}
+
+@media (min-width: 760px) and (max-width: 990px) {
+  .player-wrap {
+    height: 500px;
+  }
+
+  .play-list-wrap {
+    height: auto;
+    overflow-y: visible;
+  }
+}
+
+@media (min-width: 300px) and (max-width: 760px) {
+  .player-wrap {
+    height: 450px;
+  }
+
+  .play-list-wrap {
+    height: auto;
+    overflow-y: visible;
+  }
+}
