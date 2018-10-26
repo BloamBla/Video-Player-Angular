@@ -10,3 +10,11 @@
   height: 100%;
 }
 
+@media (min-width: 300px) and (max-width: 760px) {
+  .app-container-wrap {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    height: 100%;
+  }
+}
+

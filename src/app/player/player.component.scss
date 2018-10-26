@@ -45,6 +45,11 @@
     height: auto;
     overflow-y: visible;
   }
+
+  .row {
+    margin-left: 0;
+    margin-right: 0;
+  }
 }
 
 @media (min-width: 300px) and (max-width: 760px) {
