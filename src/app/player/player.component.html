@@ -1,0 +1,22 @@
+<div id="container" class="container">
+  <div id="player" *ngIf="currentMovie" class="player-wrap bg-light p-3 mb-3 shadow-lg w-100 row rounded">
+    <div class="mx-auto w-100 position-relative">
+      <div class="video-wrap container justify-content-center">
+        <video [src]="'assets/' + currentMovie.video" [poster]="'assets/' + currentMovie.preview" controls
+               id="video" class="video-item w-100 rounded shadow"></video>
+      </div>
+      <div class="position-absolute bottom-0">
+        <div class="d-block"><u>Title:</u><span class="font-weight-bold"> {{currentMovie.title}}</span></div>
+        <div class="d-block"><u>Director:</u> {{currentMovie.director}}</div>
+        <div class="d-block"><u>Description:</u> {{currentMovie.description}}</div>
+      </div>
+    </div>
+  </div>
+  <div id="list" *ngIf="movies" class="play-list-wrap shadow-lg bg-light rounded p-3 w-100 row justify-content-center">
+    <div *ngFor="let movie of movies;" class="play-list-item m-3 p-3 bg-light shadow flex-shrink-1 rounded cursor-pointer"
+         (click)="changeMovie(movie)">
+      <div [ngStyle]="{'background-image': 'url(assets/' + movie.preview + ')'}" class="img-wrap mb-1"></div>
+      <div class="font-weight-bold text-center">{{movie.title}}</div>
+    </div>
+  </div>
+</div>
