@@ -24,12 +24,12 @@ export class PlayerComponent implements OnInit {
       }
     );
 
-    this.getBG = (link) => {
+    this.getBG = (link: string) => {
       return this.sanitizer.bypassSecurityTrustStyle(`{background-image: url(assets/${link})}`);
     };
   }
 
-  changeMovie(movie) {
+  changeMovie(movie: Object) {
     if (!document.querySelector('#video').getAttribute('autoplay')) {
       this.renderer.setAttribute(document.querySelector('#video'), 'autoplay', 'true');
       document.querySelector('#video').play();

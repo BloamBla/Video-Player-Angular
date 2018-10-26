@@ -11,6 +11,11 @@
 
 .video-item {
   max-height: 75%;
+  background: #000;
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }
 
 .video-wrap {
@@ -50,5 +55,14 @@
   .play-list-wrap {
     height: auto;
     overflow-y: visible;
+  }
+
+  .row {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .video-item {
+    min-height: 200px;
   }
 }
