@@ -18,7 +18,7 @@ export class AddingComponent implements OnInit {
     video: new FormControl('', Validators.required)
   });
 
-  movies: Object = [];
+  movies;
 
   constructor(private data: DataService) { }
 
@@ -28,6 +28,7 @@ export class AddingComponent implements OnInit {
 
   addMovie() {
     this.movies = [...this.movies, this.form.value];
+    console.log(this.movies);
     this.form.setValue({
       title: '',
       director: '',

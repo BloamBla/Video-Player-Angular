@@ -18,7 +18,7 @@ type Movie = Object & {
 })
 export class PlayerComponent implements OnInit {
 
-  movies: [...Movie];
+  movies: Movie[];
   currentMovie: Movie;
   getBG;
 
@@ -27,8 +27,8 @@ export class PlayerComponent implements OnInit {
   ngOnInit() {
     this.data.getData().subscribe(
       data => {
+        this.movies = data;
         this.currentMovie = data[0];
-        this.movies = [...data];
       });
     this.getBG = (link: string) => {
       return this.sanitizer.bypassSecurityTrustStyle(`{background-image: url(assets/${link})}`);
