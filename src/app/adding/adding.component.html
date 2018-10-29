@@ -1,0 +1,52 @@
+<body>
+	<form name="form" [formGroup]="form" (ngSubmit)="form.valid && onSubmit()">
+		<div class="grid mx-auto mt-3 w-50">
+			<div class="bg-light shadow p-3 mb-3 align-middle rounded form-group">
+				<label class="p-0 m-0">Title:</label>
+					<input type="text" class="float-right w-100 form-control" formControlName="title"
+						[ngClass]="{'is-invalid': form.get('title').touched && form.get('title').invalid}" required>
+				<div class="invalid-feedback">
+					<div>Title is required</div>
+				</div>
+			</div>
+			<div class="bg-light shadow p-3 mb-3 align-middle  form-group">
+				<label class="p-0 m-0">Director:</label>
+				<input name="director" type="text" class="float-right w-100 mx-auto form-control" formControlName="director"
+					       [ngClass]="{'is-invalid': form.get('director').touched && form.get('director').invalid}">
+				<div class="invalid-feedback">
+					<div>Director is required</div>
+				</div>
+			</div>
+			<div class="bg-light shadow p-3 mb-3 align-middle rounded form-group span-col-2">
+				<label class="p-0 m-0">Description:</label>
+					<textarea name="description" formControlName="description" type="text" class="float-right w-100 form-control"
+					          [ngClass]="{'is-invalid': form.get('description').touched && form.get('description').invalid}"
+					          [rows]="4"></textarea>
+				<div class="invalid-feedback">
+					<div>Description is required</div>
+				</div>
+			</div>
+			<div class="bg-light shadow p-3 mb-3 align-middle rounded form-group">
+				<label class="p-0 m-0">Poster URL:</label>
+					<input name="preview" type="text" class="float-right w-100 form-control" formControlName="preview"
+					       [ngClass]="{'is-invalid': form.get('preview').touched && form.get('preview').invalid}">
+				<div class="invalid-feedback">
+					<div>Poster URL is required</div>
+				</div>
+			</div>
+			<div class="bg-light shadow p-3 mb-3 align-middle rounded form-group">
+				<label class="p-0 m-0">Video URL:</label>
+					<input name="video" type="text" class="float-right w-100 form-control" formControlName="video"
+					       [ngClass]="{'is-invalid': form.get('video').touched && form.get('video').invalid}">
+				<div class="invalid-feedback">
+					<div>Video URL is required</div>
+				</div>
+			</div>
+		</div>
+	</form>
+
+	<div class="w-50 mx-auto">
+		<button type="button" class="btn btn-light border-dark" routerLink="">Back to player</button>
+		<button type="button" class="btn btn-primary float-right" (click)="addMovie()" [disabled]="!form.valid">Add new movie</button>
+	</div>
+</body>
