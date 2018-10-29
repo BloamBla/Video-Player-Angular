@@ -36,6 +36,17 @@
   bottom: 0;
 }
 
+.add-movie-button {
+  width: 35px;
+  height: 35px;
+  left: 15px;
+  top: 15px;
+  background: url(../../assets/add.png) 50% 50% no-repeat white;
+  background-size: contain;
+  border: 2px solid black;
+  cursor: pointer;
+}
+
 @media (min-width: 760px) and (max-width: 990px) {
   .player-wrap {
     height: 500px;
