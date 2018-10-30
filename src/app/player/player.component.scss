@@ -2,6 +2,10 @@
   width: 250px;
 }
 
+.main-wrap {
+  height: 100vh;
+}
+
 .img-wrap {
   height: 100px;
   background: no-repeat 50% 0;
@@ -24,12 +28,13 @@
 }
 
 .player-wrap {
-  height: 60vh;
+  height: 60%;
+  overflow-y: auto;
 }
 
 .play-list-wrap {
-  height: 35vh;
-  overflow-y: scroll;
+  height: 37%;
+  overflow-y: auto;
 }
 
 .bottom-0 {
@@ -49,12 +54,11 @@
 
 @media (min-width: 760px) and (max-width: 990px) {
   .player-wrap {
-    height: 500px;
+    height: auto;
   }
 
   .play-list-wrap {
     height: auto;
-    overflow-y: visible;
   }
 
   .row {
@@ -65,12 +69,11 @@
 
 @media (min-width: 300px) and (max-width: 760px) {
   .player-wrap {
-    height: 450px;
+    height: auto;
   }
 
   .play-list-wrap {
     height: auto;
-    overflow-y: visible;
   }
 
   .row {

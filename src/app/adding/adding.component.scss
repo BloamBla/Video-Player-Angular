@@ -1,5 +1,10 @@
-.w-300px {
-  width: 300px;
+.main-wrap {
+  width: 50%;
+  margin-top: 3rem;
+}
+
+.buttons-wrap {
+  width: 50%;
 }
 
 .fit-content {
@@ -16,14 +21,27 @@
   grid-column: span 2 / auto;
 }
 
+.hidden {
+  display: none;
+}
+
 @media (max-width: 995px){
   .grid {
     display: grid;
     grid-template-columns: repeat(1, 1fr);
-    grid-gap: 10px;
+    grid-gap: 1px;
   }
 
   .span-col-2 {
     grid-column: auto;
+  }
+
+  .main-wrap {
+    width: 100%;
+    margin-top: 0;
+  }
+
+  .buttons-wrap {
+    width: 100%;
   }
 }

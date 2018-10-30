@@ -1,15 +1,6 @@
-import {Component, ElementRef, OnInit, Renderer2, Type} from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
+import { Component, OnInit } from '@angular/core';
 import { DataService} from '../data.service';
-import { Observable } from 'rxjs';
-
-type Movie = Object & {
-  title: String,
-  description: String,
-  video: String,
-  director: String,
-  preview: String
-}
+import { MovieInterface } from '../movie-interface';
 
 @Component({
   selector: 'app-player',
@@ -18,11 +9,11 @@ type Movie = Object & {
 })
 export class PlayerComponent implements OnInit {
 
-  movies: Movie[];
-  currentMovie: Movie;
+  movies: MovieInterface[];
+  currentMovie: MovieInterface;
   getBG;
 
-  constructor(private data: DataService, private sanitizer: DomSanitizer, private renderer: Renderer2, private el: ElementRef) { }
+  constructor(private data: DataService) { }
 
   ngOnInit() {
     this.data.getData().subscribe(
@@ -31,13 +22,13 @@ export class PlayerComponent implements OnInit {
         this.currentMovie = data[0];
       });
     this.getBG = (link: string) => {
-      return this.sanitizer.bypassSecurityTrustStyle(`{background-image: url(assets/${link})}`);
+      return `{background-image: url(assets/${link})}`;
     };
   }
 
-  changeMovie(movie: Movie) {
+  changeMovie(movie: MovieInterface) {
     if (!document.querySelector('#video').getAttribute('autoplay')) {
-      this.renderer.setAttribute(document.querySelector('#video'), 'autoplay', 'true');
+      document.querySelector('#video').setAttribute('autoplay', 'true');
     }
     this.currentMovie = movie;
   }

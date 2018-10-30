@@ -1,30 +1,32 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {observable, Observable} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { MovieInterface } from './movie-interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
 
-  movies: Object;
-  abserv: Object;
+  movies: MovieInterface;
 
   constructor(private http: HttpClient) {
   }
 
   getData() {
-    return this.abserv = Observable.create((observer: any) => {
+    return Observable.create((observer: any) => {
       if (this.movies) {
         observer.next(this.movies);
-      } else this.http.get('assets/data.json').subscribe(
-        data => observer.next(data)
-      );
+      } else {
+        this.http.get('assets/data.json').subscribe(
+          data => observer.next(data)
+        );
+      }
     });
   }
 
   setMovies(newMovies) {
-    let movies = newMovies;
+    const movies = newMovies;
     this.movies = movies;
     return (() => movies)();
   }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MovieInterface } from '../movie-interface';
 
 @Component({
   selector: 'app-adding',
@@ -18,24 +18,25 @@ export class AddingComponent implements OnInit {
     video: new FormControl('', Validators.required)
   });
 
-  movies;
+  movies: MovieInterface[];
+  isSubmitted: Boolean = false;
 
   constructor(private data: DataService) { }
 
   ngOnInit() {
-    this.movies = this.data.getMovies();
+    if (!this.movies) {
+      this.movies = [];
+    }
+    const arr = this.data.getMovies();
+    this.movies = this.movies.concat(arr);
   }
 
   addMovie() {
-    this.movies = [...this.movies, this.form.value];
-    console.log(this.movies);
-    this.form.setValue({
-      title: '',
-      director: '',
-      description: '',
-      preview: '',
-      video: ''
-    });
+    this.isSubmitted = true;
+    this.movies.push(this.form.value);
+    this.form.reset();
+    this.form.clearValidators();
     this.data.setMovies(this.movies);
+    setTimeout(() => this.isSubmitted = false, 3000);
   }
 }
