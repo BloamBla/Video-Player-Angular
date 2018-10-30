@@ -11,17 +11,38 @@ import { MovieInterface } from '../movie-interface';
 export class AddingComponent implements OnInit {
 
   form = new FormGroup({
-    title: new FormControl('', Validators.required),
-    director: new FormControl('', Validators.required),
-    description: new FormControl('', Validators.required),
-    preview: new FormControl('', Validators.required),
-    video: new FormControl('', Validators.required)
+    title: new FormControl('', [
+      Validators.required,
+      this.whitespacesValidator,
+    ]),
+    director: new FormControl('', [
+      Validators.required,
+      this.whitespacesValidator,
+    ]),
+    description: new FormControl('', [
+      Validators.required,
+      this.whitespacesValidator,
+    ]),
+    preview: new FormControl('', [
+      Validators.required,
+      this.whitespacesValidator,
+    ]),
+    video: new FormControl('', [
+      Validators.required,
+      this.whitespacesValidator,
+    ])
   });
 
   movies: MovieInterface[];
   isSubmitted: Boolean = false;
 
   constructor(private data: DataService) { }
+
+  whitespacesValidator(control: FormControl) {
+    const isWhitespace = (control.value || '').trim().length === 0;
+    const isValid = !isWhitespace;
+    return isValid ? null : { 'whitespace': true };
+  }
 
   ngOnInit() {
     if (!this.movies) {
