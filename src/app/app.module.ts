@@ -13,6 +13,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSnackBarModule } from '@angular/material';
 
 import { SnackBarComponent } from './snack-bar/snack-bar.component';
+import { DndModule } from 'ng2-dnd';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { SnackBarComponent } from './snack-bar/snack-bar.component';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     NoopAnimationsModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    DndModule.forRoot()
   ],
   entryComponents: [
     SnackBarComponent

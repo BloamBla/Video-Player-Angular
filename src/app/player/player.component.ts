@@ -44,4 +44,20 @@ export class PlayerComponent implements OnInit {
   addNewMovie() {
     this.data.setMovies(this.movies);
   }
+
+  removeMovie(movie: Movie) {
+    for (let i = 0; i < this.movies.length; i++) {
+      if (this.movies[i] === movie) {
+        this.movies.splice(i, 1);
+        break;
+      }
+    }
+  }
+
+  transferDataSuccess($event: any) {
+    if (this.autoPlay === false) {
+      this.autoPlay = true;
+    }
+    this.currentMovie = $event.dragData;
+  }
 }
