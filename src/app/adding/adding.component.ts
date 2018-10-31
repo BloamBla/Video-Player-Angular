@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MovieInterface } from '../movie-interface';
+import { Movie } from '../model';
+import { SnackService } from '../snack.service';
 
 @Component({
   selector: 'app-adding',
@@ -33,10 +34,9 @@ export class AddingComponent implements OnInit {
     ])
   });
 
-  movies: MovieInterface[];
-  isSubmitted: Boolean = false;
+  movies: Movie[];
 
-  constructor(private data: DataService) { }
+  constructor(private data: DataService, public snackServ: SnackService) { }
 
   whitespacesValidator(control: FormControl) {
     const isWhitespace = (control.value || '').trim().length === 0;
@@ -53,11 +53,10 @@ export class AddingComponent implements OnInit {
   }
 
   addMovie() {
-    this.isSubmitted = true;
     this.movies.push(this.form.value);
     this.form.reset();
     this.form.clearValidators();
     this.data.setMovies(this.movies);
-    setTimeout(() => this.isSubmitted = false, 3000);
+    this.snackServ.showSnackBar();
   }
 }

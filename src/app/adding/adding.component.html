@@ -1,8 +1,5 @@
 <body>
 	<div class="position-relative">
-		<div class="alert alert-success position-absolute" [ngClass]="{'hidden': !this.isSubmitted, 'visible': this.isSubmitted}" role="alert">
-			New movie was added!
-		</div>
 		<form name="form" [formGroup]="form" (ngSubmit)="form.valid && onSubmit()">
 			<div class="grid mx-auto main-wrap">
 				<div class="bg-light shadow p-3 mb-3 align-middle rounded form-group">

@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { MovieInterface } from './movie-interface';
+import { Movie } from './model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
 
-  movies: MovieInterface;
+  movies: Movie;
 
   constructor(private http: HttpClient) {
   }
@@ -26,12 +26,10 @@ export class DataService {
   }
 
   setMovies(newMovies) {
-    const movies = newMovies;
-    this.movies = movies;
-    return (() => movies)();
+    this.movies = newMovies;
   }
 
   getMovies() {
-    return (() => this.movies)();
+    return this.movies;
   }
 }

@@ -1,4 +1,4 @@
-export type MovieInterface = {
+export type Movie = {
   title: String;
   description: String;
   video: String;

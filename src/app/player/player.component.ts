@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService} from '../data.service';
-import { MovieInterface } from '../movie-interface';
+import { Movie } from '../model';
 
 @Component({
   selector: 'app-player',
@@ -9,8 +9,9 @@ import { MovieInterface } from '../movie-interface';
 })
 export class PlayerComponent implements OnInit {
 
-  movies: MovieInterface[];
-  currentMovie: MovieInterface;
+  movies: Movie[];
+  currentMovie: Movie;
+  autoPlay: Boolean = false;
   getBG;
 
   constructor(private data: DataService) { }
@@ -26,11 +27,17 @@ export class PlayerComponent implements OnInit {
     };
   }
 
-  changeMovie(movie: MovieInterface) {
-    if (!document.querySelector('#video').getAttribute('autoplay')) {
-      document.querySelector('#video').setAttribute('autoplay', 'true');
+  changeMovie(movie: Movie) {
+    if (this.autoPlay === false) {
+      this.autoPlay = true;
     }
     this.currentMovie = movie;
+  }
+
+  getAutoPlay() {
+    if (this.autoPlay === true) {
+      return 'autoplay';
+    }
   }
 
   addNewMovie() {
