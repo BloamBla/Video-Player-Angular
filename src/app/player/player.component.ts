@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService} from '../data.service';
 import { Movie } from '../model';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-player',
@@ -20,7 +21,7 @@ export class PlayerComponent implements OnInit {
     this.data.getData().subscribe(
       data => {
         this.movies = data;
-        this.currentMovie = data[0];
+        this.currentMovie = _.first(data);
       });
     this.getBG = (link: string) => {
       return `{background-image: url(assets/${link})}`;

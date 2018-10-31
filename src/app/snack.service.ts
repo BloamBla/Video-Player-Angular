@@ -1,5 +1,6 @@
-import {Component, Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
+import { SnackBarComponent } from './snack-bar/snack-bar.component';
 
 @Injectable({
   providedIn: 'root'
@@ -16,15 +17,3 @@ export class SnackService {
     });
   }
 }
-
-@Component({
-  selector: 'app-snack',
-  templateUrl: 'app-snack.html',
-  styles: [`
-    .snack-class {
-      color: white;
-    }
-  `],
-})
-
-export class SnackBarComponent {}
