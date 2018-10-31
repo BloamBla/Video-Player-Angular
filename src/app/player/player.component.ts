@@ -1,7 +1,7 @@
-import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
+import { Component, OnInit } from '@angular/core';
 import { DataService} from '../data.service';
-import { Observable } from 'rxjs';
+import { Movie } from '../model';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-player',
@@ -10,29 +10,38 @@ import { Observable } from 'rxjs';
 })
 export class PlayerComponent implements OnInit {
 
-  movies: Object;
-  currentMovie: Object;
+  movies: Movie[];
+  currentMovie: Movie;
+  autoPlay: Boolean = false;
   getBG;
 
-  constructor(private data: DataService, private sanitizer: DomSanitizer, private renderer: Renderer2, private el: ElementRef) { }
+  constructor(private data: DataService) { }
 
   ngOnInit() {
     this.data.getData().subscribe(
       data => {
         this.movies = data;
-        this.currentMovie = this.movies[0];
-      }
-    );
-
+        this.currentMovie = _.first(data);
+      });
     this.getBG = (link: string) => {
-      return this.sanitizer.bypassSecurityTrustStyle(`{background-image: url(assets/${link})}`);
+      return `{background-image: url(assets/${link})}`;
     };
   }
 
-  changeMovie(movie: Object) {
-    if (!document.querySelector('#video').getAttribute('autoplay')) {
-      this.renderer.setAttribute(document.querySelector('#video'), 'autoplay', 'true');
+  changeMovie(movie: Movie) {
+    if (this.autoPlay === false) {
+      this.autoPlay = true;
     }
     this.currentMovie = movie;
+  }
+
+  getAutoPlay() {
+    if (this.autoPlay === true) {
+      return 'autoplay';
+    }
+  }
+
+  addNewMovie() {
+    this.data.setMovies(this.movies);
   }
 }
