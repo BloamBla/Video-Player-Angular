@@ -52,8 +52,16 @@
   top: 10px;
   background: url(../../assets/add.png) 50% 50% no-repeat;
   background-size: contain;
-  border: 2px solid black;
   cursor: pointer;
+  transition: 500ms;
+}
+
+.add-movie-button:hover {
+  width: 35px;
+  height: 35px;
+  left: 5px;
+  top: 5px;
+  transition: 500ms;
 }
 
 .delete-button {
@@ -64,10 +72,15 @@
   background: url(../../assets/delete.png) 50% 50% no-repeat;
   -webkit-background-size: contain;
   background-size: contain;
+  transition: 500ms;
 }
 
 .delete-button:hover {
-  box-shadow: 0 0 10px red;
+  width: 20px;
+  height: 20px;
+  right: 7.5px;
+  top: 7.5px;
+  transition: 500ms;
 }
 
 @media (min-width: 760px) and (max-width: 990px) {
