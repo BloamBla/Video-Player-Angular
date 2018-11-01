@@ -56,15 +56,10 @@ export class PlayerComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        for (const elem of this.movies) {
-          if (elem === movie) {
-            if (this.currentMovie === movie) {
-              this.currentMovie = _.first(this.movies);
-            }
-            this.movies.splice(this.movies.indexOf(movie), 1);
-            break;
-          }
+        if (this.currentMovie === movie) {
+          this.currentMovie = _.first(this.movies);
         }
+        this.movies.splice(this.movies.indexOf(movie), 1);
       }
     });
   }
