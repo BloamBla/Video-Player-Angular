@@ -17,7 +17,7 @@ export class PlayerComponent implements OnInit {
   autoPlay: Boolean = false;
   getBG;
 
-  constructor(private data: DataService, public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog, private data: DataService) { }
 
   ngOnInit() {
     this.data.getData().subscribe(
@@ -47,17 +47,21 @@ export class PlayerComponent implements OnInit {
     this.data.setMovies(this.movies);
   }
 
-  removeMovie(movie: Movie) {
+  removeMovie(movie: Movie, $event) {
+    $event.stopPropagation();
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '300px',
       data: {movie}
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result === true) {
-        for (let i = 0; i < this.movies.length; i++) {
-          if (this.movies[i] === movie) {
-            this.movies.splice(i, 1);
+      if (result) {
+        for (const elem of this.movies) {
+          if (elem === movie) {
+            if (this.currentMovie === movie) {
+              this.currentMovie = _.first(this.movies);
+            }
+            this.movies.splice(this.movies.indexOf(movie), 1);
             break;
           }
         }

@@ -12,13 +12,14 @@
 			</div>
 		</div>
 	</div>
-	<div id="list"
+	<div id="list" [sortableData]="movies" dnd-sortable-container
 	     class="play-list-wrap shadow-lg bg-light rounded p-3 w-100 row justify-content-center position-relative"
 	     (load)="getMovies()" *ngIf="movies">
 		<span (click)="addNewMovie()" class="add-movie-button rounded-circle position-absolute" routerLink="adding"></span>
-		<div *ngFor="let movie of movies;" (click)="changeMovie(movie)" dnd-draggable [dragEnabled]="true" [dragData]="movie"
+		<div *ngFor="let movie of movies; let i = index" (click)="changeMovie(movie)" dnd-draggable [dragEnabled]="true"
+		     [dragData]="movie" dnd-sortable [sortableIndex]="i"
 		     class="play-list-item m-3 p-3 bg-light shadow flex-shrink-1 rounded cursor-pointer position-relative">
-			<span class="delete-button position-absolute rounded-circle" (click)="removeMovie(movie)"></span>
+			<span class="delete-button position-absolute rounded-circle" (click)="removeMovie(movie, $event)"></span>
 			<div [ngStyle]="{'background-image': 'url(' + movie.preview + ')'}" class="img-wrap mb-1"></div>
 			<div class="font-weight-bold text-center">{{movie.title}}</div>
 		</div>
