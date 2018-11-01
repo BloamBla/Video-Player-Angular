@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { DataService} from '../data.service';
 import { Movie } from '../model';
 import * as _ from 'lodash';
+import {MatDialog} from '@angular/material';
+import {ConfirmDialogComponent} from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-player',
@@ -15,7 +17,7 @@ export class PlayerComponent implements OnInit {
   autoPlay: Boolean = false;
   getBG;
 
-  constructor(private data: DataService) { }
+  constructor(public dialog: MatDialog, private data: DataService) { }
 
   ngOnInit() {
     this.data.getData().subscribe(
@@ -43,5 +45,29 @@ export class PlayerComponent implements OnInit {
 
   addNewMovie() {
     this.data.setMovies(this.movies);
+  }
+
+  removeMovie(movie: Movie, $event) {
+    $event.stopPropagation();
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '300px',
+      data: {movie}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        if (this.currentMovie === movie) {
+          this.currentMovie = _.first(this.movies);
+        }
+        this.movies.splice(this.movies.indexOf(movie), 1);
+      }
+    });
+  }
+
+  transferDataSuccess($event: any) {
+    if (this.autoPlay === false) {
+      this.autoPlay = true;
+    }
+    this.currentMovie = $event.dragData;
   }
 }

@@ -1,5 +1,8 @@
 .play-list-item {
+  padding-right: 30px!important;
+  padding-left: 30px!important;
   width: 250px;
+  max-height: 170px;
 }
 
 .main-wrap {
@@ -8,7 +11,7 @@
 
 .img-wrap {
   height: 100px;
-  background: no-repeat 50% 0;
+  background: no-repeat 50% 50%;
   -webkit-background-size: contain;
   background-size: contain;
 }
@@ -42,14 +45,42 @@
 }
 
 .add-movie-button {
+  z-index: 100;
+  width: 25px;
+  height: 25px;
+  left: 10px;
+  top: 10px;
+  background: url(../../assets/add.png) 50% 50% no-repeat;
+  background-size: contain;
+  cursor: pointer;
+  transition: 500ms;
+}
+
+.add-movie-button:hover {
   width: 35px;
   height: 35px;
-  left: 15px;
-  top: 15px;
-  background: url(../../assets/add.png) 50% 50% no-repeat white;
+  left: 5px;
+  top: 5px;
+  transition: 500ms;
+}
+
+.delete-button {
+  width: 15px;
+  height: 15px;
+  right: 10px;
+  top: 10px;
+  background: url(../../assets/delete.png) 50% 50% no-repeat;
+  -webkit-background-size: contain;
   background-size: contain;
-  border: 2px solid black;
-  cursor: pointer;
+  transition: 500ms;
+}
+
+.delete-button:hover {
+  width: 20px;
+  height: 20px;
+  right: 7.5px;
+  top: 7.5px;
+  transition: 500ms;
 }
 
 @media (min-width: 760px) and (max-width: 990px) {
