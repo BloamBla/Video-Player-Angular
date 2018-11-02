@@ -8,7 +8,7 @@ import { Movie } from '../../model';
 })
 export class DataService {
 
-  movies: Movie;
+  movies: Movie[];
 
   constructor(private http: HttpClient) {
   }
@@ -29,11 +29,12 @@ export class DataService {
     this.movies = newMovies;
   }
 
-  setData() {
+  setNewMovie(newMovie) {
     return Observable.create((observer: any) => {
-      this.http.post('commands/config', '{"delay":5000}').subscribe(
-        () => {
-          observer.next(true);
+      this.http.post('/api/movies', newMovie).subscribe(
+        (data: any) => {
+          this.movies.push(data);
+          observer.next(data);
         }
       );
     });

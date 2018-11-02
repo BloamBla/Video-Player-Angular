@@ -37,27 +37,30 @@ export class AddingComponent implements OnInit {
 
   movies: Movie[];
 
-  constructor(private data: DataService, public snackServ: SnackService) { }
+  constructor(public snackServ: SnackService, private data: DataService) {
+  }
 
   whitespacesValidator(control: FormControl) {
     const isWhitespace = (control.value || '').trim().length === 0;
     const isValid = !isWhitespace;
-    return isValid ? null : { 'whitespace': true };
+    return isValid ? null : {'whitespace': true};
   }
 
   ngOnInit() {
     if (!this.movies) {
       this.movies = [];
     }
-    const arr = this.data.getMovies();
-    this.movies = this.movies.concat(arr);
+    const arr: any = this.data.getMovies();
+    this.movies.push(arr);
   }
 
   addMovie() {
     this.movies.push(this.form.value);
+    this.data.setNewMovie(this.form.value).subscribe((data) => {
+      this.movies = this.movies.concat(data);
+    });
     this.form.reset();
     this.form.clearValidators();
-    this.data.setMovies(this.movies);
     this.snackServ.showSnackBar();
   }
 
@@ -65,19 +68,15 @@ export class AddingComponent implements OnInit {
     this.form.get('video').markAsUntouched();
     let videoData: any = document.querySelector('#videoFile');
     videoData = _.first(videoData.files);
-    this.data.setData().subscribe(() => {
-      this.form.get('video').markAsTouched();
-      this.form.get('video').setValue(`assets/video/${videoData.name}`);
-    });
+    this.form.get('video').markAsTouched();
+    this.form.get('video').setValue(`assets/video/${videoData.name}`);
   }
 
   postImage() {
     this.form.get('preview').markAsUntouched();
     let imageData: any = document.querySelector('#imageFile');
     imageData = _.first(imageData.files);
-    this.data.setData().subscribe(() => {
-      this.form.get('preview').markAsTouched();
-      this.form.get('preview').setValue(`assets/image/${imageData.name}`);
-    });
+    this.form.get('preview').markAsTouched();
+    this.form.get('preview').setValue(`assets/preview/${imageData.name}`);
   }
 }
