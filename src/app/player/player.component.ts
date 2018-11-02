@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService} from '../data.service';
+import { DataService} from '../services/data-service/data.service';
 import { Movie } from '../model';
 import * as _ from 'lodash';
-import {MatDialog} from '@angular/material';
-import {ConfirmDialogComponent} from '../confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-player',

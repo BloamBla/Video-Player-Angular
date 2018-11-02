@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from '../data.service';
+import { DataService } from '../services/data-service/data.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Movie } from '../model';
-import { SnackService } from '../snack.service';
+import { SnackService } from '../services/sneck-service/snack.service';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-adding',
@@ -58,5 +59,25 @@ export class AddingComponent implements OnInit {
     this.form.clearValidators();
     this.data.setMovies(this.movies);
     this.snackServ.showSnackBar();
+  }
+
+  postVideo() {
+    this.form.get('video').markAsUntouched();
+    let videoData: any = document.querySelector('#videoFile');
+    videoData = _.first(videoData.files);
+    this.data.setData().subscribe(() => {
+      this.form.get('video').markAsTouched();
+      this.form.get('video').setValue(`assets/video/${videoData.name}`);
+    });
+  }
+
+  postImage() {
+    this.form.get('preview').markAsUntouched();
+    let imageData: any = document.querySelector('#imageFile');
+    imageData = _.first(imageData.files);
+    this.data.setData().subscribe(() => {
+      this.form.get('preview').markAsTouched();
+      this.form.get('preview').setValue(`assets/image/${imageData.name}`);
+    });
   }
 }

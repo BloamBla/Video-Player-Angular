@@ -6,15 +6,19 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PlayerComponent } from './player/player.component';
 
-import { HttpClientModule } from '@angular/common/http';
-import { AddingComponent } from './adding/adding.component';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { AddingComponent } from './adding/adding.component';
 import { MaterialModule } from './material-module';
 
 import { SnackBarComponent } from './snack-bar/snack-bar.component';
 import { DndModule } from 'ng2-dnd';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { ParamInterceptor } from './api.interceptor';
+import { DataService } from './services/data-service/data.service';
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { InMemoryDataService } from './services/in-memory-data-service/in-memory-data.service';
 
 @NgModule({
   declarations: [
@@ -28,6 +32,7 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService),
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,
@@ -39,7 +44,13 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
     SnackBarComponent,
     ConfirmDialogComponent
   ],
-  providers: [],
+  providers: [
+    DataService, {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ParamInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

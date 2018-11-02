@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Movie } from './model';
+import { Movie } from '../../model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +18,7 @@ export class DataService {
       if (this.movies) {
         observer.next(this.movies);
       } else {
-        this.http.get('assets/data.json').subscribe(
+        this.http.get('/api/movies').subscribe(
           data => observer.next(data)
         );
       }
@@ -27,6 +27,16 @@ export class DataService {
 
   setMovies(newMovies) {
     this.movies = newMovies;
+  }
+
+  setData() {
+    return Observable.create((observer: any) => {
+      this.http.post('commands/config', '{"delay":5000}').subscribe(
+        () => {
+          observer.next(true);
+        }
+      );
+    });
   }
 
   getMovies() {
