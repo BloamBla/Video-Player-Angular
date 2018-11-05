@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from '../data.service';
+import { DataService } from '../services/data-service/data.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Movie } from '../model';
-import { SnackService } from '../snack.service';
+import { SnackService } from '../services/sneck-service/snack.service';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-adding',
@@ -36,27 +37,46 @@ export class AddingComponent implements OnInit {
 
   movies: Movie[];
 
-  constructor(private data: DataService, public snackServ: SnackService) { }
+  constructor(public snackServ: SnackService, private data: DataService) {
+  }
 
   whitespacesValidator(control: FormControl) {
     const isWhitespace = (control.value || '').trim().length === 0;
     const isValid = !isWhitespace;
-    return isValid ? null : { 'whitespace': true };
+    return isValid ? null : {'whitespace': true};
   }
 
   ngOnInit() {
     if (!this.movies) {
       this.movies = [];
     }
-    const arr = this.data.getMovies();
-    this.movies = this.movies.concat(arr);
+    const arr: any = this.data.getMovies();
+    this.movies.push(arr);
   }
 
   addMovie() {
     this.movies.push(this.form.value);
+    this.data.setNewMovie(this.form.value).subscribe((data) => {
+      this.movies = this.movies.concat(data);
+    });
     this.form.reset();
     this.form.clearValidators();
-    this.data.setMovies(this.movies);
     this.snackServ.showSnackBar();
+  }
+
+  postVideo() {
+    this.form.get('video').markAsUntouched();
+    let videoData: any = document.querySelector('#videoFile');
+    videoData = _.first(videoData.files);
+    this.form.get('video').markAsTouched();
+    this.form.get('video').setValue(`assets/video/${videoData.name}`);
+  }
+
+  postImage() {
+    this.form.get('preview').markAsUntouched();
+    let imageData: any = document.querySelector('#imageFile');
+    imageData = _.first(imageData.files);
+    this.form.get('preview').markAsTouched();
+    this.form.get('preview').setValue(`assets/preview/${imageData.name}`);
   }
 }

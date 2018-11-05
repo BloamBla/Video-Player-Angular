@@ -1,45 +1,56 @@
+import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { PlayerComponent } from './player/player.component';
-
-import { HttpClientModule } from '@angular/common/http';
-import { AddingComponent } from './adding/adding.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material-module';
 
-import { SnackBarComponent } from './snack-bar/snack-bar.component';
-import { DndModule } from 'ng2-dnd';
+import { AddingComponent } from './adding/adding.component';
+import { AppComponent } from './app.component';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { PlayerComponent } from './player/player.component';
+import { SnackBarComponent } from './snack-bar/snack-bar.component';
+
+import { DataService } from './services/data-service/data.service';
+import { InMemoryDataService } from './services/in-memory-data-service/in-memory-data.service';
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ParamInterceptor } from './api.interceptor';
+
+import { DndModule } from 'ng2-dnd';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PlayerComponent,
     AddingComponent,
-    SnackBarComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    PlayerComponent,
+    SnackBarComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule,
-    ReactiveFormsModule,
-    FormsModule,
     BrowserAnimationsModule,
-    NoopAnimationsModule,
+    DndModule.forRoot(),
+    FormsModule,
+    HttpClientModule,
+    HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, { dataEncapsulation: false }),
     MaterialModule,
-    DndModule.forRoot()
+    NoopAnimationsModule,
+    ReactiveFormsModule
   ],
   entryComponents: [
-    SnackBarComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    SnackBarComponent
   ],
-  providers: [],
+  providers: [
+    DataService, {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ParamInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Movie } from './model';
+import { Movie } from '../../model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
 
-  movies: Movie;
+  movies: Movie[];
 
   constructor(private http: HttpClient) {
   }
@@ -18,7 +18,7 @@ export class DataService {
       if (this.movies) {
         observer.next(this.movies);
       } else {
-        this.http.get('assets/data.json').subscribe(
+        this.http.get('/api/movies').subscribe(
           data => observer.next(data)
         );
       }
@@ -27,6 +27,17 @@ export class DataService {
 
   setMovies(newMovies) {
     this.movies = newMovies;
+  }
+
+  setNewMovie(newMovie) {
+    return Observable.create((observer: any) => {
+      this.http.post('/api/movies', newMovie).subscribe(
+        (data: any) => {
+          this.movies.push(data);
+          observer.next(data);
+        }
+      );
+    });
   }
 
   getMovies() {
